@@ -1,5 +1,4 @@
 import { createClient } from '@/utils/supabase/server'
-import { signOut } from './login/actions'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -26,25 +25,12 @@ export default async function Home() {
         </p>
 
         <div className="flex gap-4 mt-8">
-          {user ? (
-            <div className="flex flex-col items-center gap-4">
-              <p className="text-lg">
-                Olá, <span className="font-semibold text-indigo-400">{user.email}</span>
-              </p>
-              <form action={signOut}>
-                <button className="px-6 py-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-full transition-colors">
-                  Sair
-                </button>
-              </form>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="px-8 py-4 text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-colors shadow-lg shadow-indigo-500/30"
-            >
-              Acessar Conta
-            </Link>
-          )}
+          <Link
+            href="/login"
+            className="px-8 py-4 text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-colors shadow-lg shadow-indigo-500/30"
+          >
+            Acessar Conta
+          </Link>
         </div>
       </main>
     </div>

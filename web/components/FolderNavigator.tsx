@@ -25,7 +25,7 @@ export default function FolderNavigator({ companyId, departmentId, initialFolder
     const currentFolderId = searchParams.get('folder')
 
     // Build breadcrumb path
-    const buildPath = (folderId: string | null): Array<{ id: string | null; name: string }> => {
+    const buildPath = (folderId: string | null): Array<{ id: string; name: string }> => {
         if (!folderId) return []
 
         const folder = folders.find(f => f.id === folderId)

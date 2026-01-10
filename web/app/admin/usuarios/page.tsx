@@ -1,5 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
-import { revalidatePath } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default async function AdminUsuariosPage() {
