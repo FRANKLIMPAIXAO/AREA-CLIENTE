@@ -20,6 +20,19 @@ export default function NotificationBell() {
     const [unreadCount, setUnreadCount] = useState(0)
     const supabase = createClient()
 
+    async function fetchNotifications() {
+        const { data } = await supabase
+            .from('notifications')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(10)
+
+        if (data) {
+            setNotifications(data)
+            setUnreadCount(data.filter(n => !n.read).length)
+        }
+    }
+
     useEffect(() => {
         fetchNotifications()
 
@@ -43,19 +56,6 @@ export default function NotificationBell() {
             supabase.removeChannel(channel)
         }
     }, [])
-
-    async function fetchNotifications() {
-        const { data } = await supabase
-            .from('notifications')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(10)
-
-        if (data) {
-            setNotifications(data)
-            setUnreadCount(data.filter(n => !n.read).length)
-        }
-    }
 
     async function markAsRead(id: string) {
         await supabase
