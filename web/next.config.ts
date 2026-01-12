@@ -3,7 +3,9 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
-    config.resolve.alias['@'] = path.resolve(__dirname);
+    const aliasPath = path.resolve(process.cwd());
+    console.log(">>>>>>>> Setting webpack alias '@' to:", aliasPath);
+    config.resolve.alias['@'] = aliasPath;
     return config;
   },
 };
