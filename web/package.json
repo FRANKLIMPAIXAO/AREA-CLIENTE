@@ -2,11 +2,11 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "find . -maxdepth 3 -not -path '*/.*' && next build --webpack",
-    "start": "next start",
-    "lint": "eslint"
+  ""scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start"
+}
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
