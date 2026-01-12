@@ -1,4 +1,4 @@
-import { createClient } from '@/app/supabase/server'
+import { createClient } from '@/supabase/server'
 import { redirect } from 'next/navigation'
 import SmartUpload from '@/components/SmartUpload'
 import DocumentFilters from '@/components/DocumentFilters'

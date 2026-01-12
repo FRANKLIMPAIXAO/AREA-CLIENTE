@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/app/supabase/server'
+import { createClient } from '@/supabase/server'
 
 const ANALYSIS_PROMPT = `Você é um especialista em documentos contábeis brasileiros. Analise este documento e extraia as seguintes informações em formato JSON:
 
