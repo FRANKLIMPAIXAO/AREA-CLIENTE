@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { signOut } from '@/app/login/actions'
+import { signOut } from '../app/login/actions'
 import NotificationBell from './NotificationBell'
 import {
     HomeIcon,
