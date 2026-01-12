@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/app/supabase/server'
 import DueDatesCalendar from '@/components/DueDatesCalendar'
 import { CalendarIcon, DocumentTextIcon, BuildingOfficeIcon, ClockIcon } from '@heroicons/react/24/outline'
 

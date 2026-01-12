@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/app/supabase/server'
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline'
 
 export default async function EmpresasPage() {
