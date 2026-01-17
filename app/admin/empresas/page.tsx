@@ -5,10 +5,21 @@ import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 export default async function AdminEmpresasPage() {
     const supabase = await createClient()
 
-    const { data: companies } = await supabase
-        .from('companies')
-        .select('*')
-        .order('created_at', { ascending: false })
+    let companies = []
+    try {
+        const { data, error } = await supabase
+            .from('companies')
+            .select('*')
+            .order('created_at', { ascending: false })
+
+        if (error) {
+            console.error('Error fetching companies:', error)
+        } else {
+            companies = data || []
+        }
+    } catch (e) {
+        console.error('Unexpected error in AdminEmpresasPage:', e)
+    }
 
     async function createCompany(formData: FormData) {
         'use server'
