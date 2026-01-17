@@ -19,6 +19,7 @@ export async function resetPassword(prevState: any, formData: FormData) {
     const { data: { user }, error: userError } = await supabase.auth.getUser()
 
     if (userError || !user) {
+        console.error('ResetPassword Action Debug: Connection failed.', { userError, user })
         return { error: 'Sessão expirada ou inválida. Por favor, solicite a redefinição de senha novamente.' }
     }
 

@@ -1,5 +1,6 @@
 import { createClient } from '../../../supabase/server'
 import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,11 +18,11 @@ export async function GET(request: Request) {
 
         if (error) {
             console.error('Auth Code Exchange Error:', error)
-            return NextResponse.redirect(`${origin}/login?message=${encodeURIComponent(`Erro ao validar link de recuperação: ${error.message}`)}`)
+            redirect(`/login?message=${encodeURIComponent(`Erro ao validar link de recuperação: ${error.message}`)}`)
         }
         console.log('Auth Code Exchange Success')
     }
 
     // URL to redirect to after sign in process completes
-    return NextResponse.redirect(`${origin}${next}`)
+    redirect(`${origin}${next}`)
 }
