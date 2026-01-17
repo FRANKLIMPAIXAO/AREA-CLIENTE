@@ -1,42 +1,36 @@
-# Área do Cliente
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Este repositório contém o código fonte para o sistema "Área do Cliente", uma solução completa para gerenciamento de clientes com interfaces Web e Mobile.
+## Getting Started
 
-## Objetivo
+First, run the development server:
 
-O objetivo deste sistema é fornecer uma plataforma centralizada onde clientes podem acessar seus dados, realizar solicitações e interagir com os serviços oferecidos.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Estrutura do Projeto
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-O projeto está organizado da seguinte forma:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- **/web**: Aplicação Web (Next.js)
-- **/mobile**: Aplicação Mobile (React Native / Expo)
-- **/supabase**: Configurações e migrações do Supabase (Auth, Database, Storage)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Tecnologias Utilizadas
+## Learn More
 
-- **Frontend Web**: Next.js, React, Tailwind CSS
-- **Mobile**: React Native, Expo
-- **Backend / Infraestrutura**: Supabase (PostgreSQL, Authentication, Storage)
+To learn more about Next.js, take a look at the following resources:
 
-## Configuração
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Pré-requisitos
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- Node.js (versão LTS recomendada)
-- npm ou yarn
-- Conta no Supabase
+## Deploy on Vercel
 
-### Instalação
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-1. Clone o repositório.
-2. Navegue até a pasta do projeto desejado (`web` ou `mobile`).
-3. Instale as dependências:
-   ```bash
-   npm install
-   ```
-
-### Supabase
-
-As configurações do Supabase estão localizadas na pasta `supabase`. Consulte o README interno para mais detalhes sobre como configurar o ambiente local e realizar migrações.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
