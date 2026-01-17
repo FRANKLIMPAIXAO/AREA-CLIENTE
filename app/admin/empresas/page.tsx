@@ -1,12 +1,14 @@
 import { createClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 export default async function AdminEmpresasPage() {
-    const supabase = await createClient()
-
     let companies = []
+
     try {
+        const supabase = await createClient()
+
         const { data, error } = await supabase
             .from('companies')
             .select('*')
@@ -18,7 +20,8 @@ export default async function AdminEmpresasPage() {
             companies = data || []
         }
     } catch (e) {
-        console.error('Unexpected error in AdminEmpresasPage:', e)
+        console.error('Critical error in AdminEmpresasPage:', e)
+        // Render safe UI or redirect if critical
     }
 
     async function createCompany(formData: FormData) {
@@ -127,7 +130,7 @@ export default async function AdminEmpresasPage() {
                         ) : (
                             <tr>
                                 <td colSpan={4} className="px-6 py-12 text-center text-gray-500">
-                                    Nenhuma empresa cadastrada
+                                    Nenhuma empresa cadastrada (ou erro ao carregar)
                                 </td>
                             </tr>
                         )}
