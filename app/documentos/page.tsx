@@ -1,11 +1,11 @@
-import { createClient } from '@/supabase/server'
+import { createClient } from '../../supabase/server'
 import { redirect } from 'next/navigation'
-import SmartUpload from '@/components/SmartUpload'
-import DocumentFilters from '@/components/DocumentFilters'
-import Pagination from '@/components/Pagination'
-import DepartmentNav from '@/components/DepartmentNav'
-import FolderNavigator from '@/components/FolderNavigator'
-import DownloadButton from '@/components/DownloadButton'
+import SmartUpload from '../../components/SmartUpload'
+import DocumentFilters from '../../components/DocumentFilters'
+import Pagination from '../../components/Pagination'
+import DepartmentNav from '../../components/DepartmentNav'
+import FolderNavigator from '../../components/FolderNavigator'
+import DownloadButton from '../../components/DownloadButton'
 
 const ITEMS_PER_PAGE = 20
 

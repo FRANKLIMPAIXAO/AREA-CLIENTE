@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { BellIcon } from '@heroicons/react/24/outline'
 import { BellIcon as BellIconSolid } from '@heroicons/react/24/solid'
-import { createClient } from '@/supabase/client'
+import { createClient } from '../supabase/client'
 
 interface Notification {
     id: string

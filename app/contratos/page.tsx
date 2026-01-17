@@ -1,4 +1,4 @@
-import { createClient } from '@/supabase/server'
+import { createClient } from '../../supabase/server'
 import { DocumentIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 
 export default async function ContratosPage() {

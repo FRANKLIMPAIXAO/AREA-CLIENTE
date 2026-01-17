@@ -1,4 +1,4 @@
-import { createClient } from '@/supabase/server'
+import { createClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 

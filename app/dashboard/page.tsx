@@ -1,5 +1,5 @@
-import { createClient } from '@/supabase/server'
-import DueDatesCalendar from '@/components/DueDatesCalendar'
+import { createClient } from '../../supabase/server'
+import DueDatesCalendar from '../../components/DueDatesCalendar'
 import { CalendarIcon, DocumentTextIcon, BuildingOfficeIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export default async function DashboardPage() {
