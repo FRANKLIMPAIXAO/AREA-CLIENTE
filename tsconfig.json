@@ -38,7 +38,8 @@
     "components",
     "supabase",
     "utils",
-    "lib"
+    "lib",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

@@ -24,12 +24,25 @@ const allFiles = getAllFiles('.');
 
 allFiles.forEach(file => {
     let content = fs.readFileSync(file, 'utf8');
-    const relativeDir = path.relative(path.dirname(file), '.');
-    const prefix = relativeDir === '' ? './' : relativeDir + '/';
 
     // Replace @/ with correct relative path
     const newContent = content.replace(/from ['"]@\/(.*)['"]/g, (match, p1) => {
-        return `from '${prefix}${p1}'`;
+        // Get the directory of the current file
+        const fileDir = path.dirname(file);
+        // Get the target path (root + the path after @/)
+        const targetPath = path.join('.', p1);
+        // Calculate relative path from file to target
+        let relativePath = path.relative(fileDir, targetPath);
+
+        // Ensure the path starts with ./ or ../
+        if (!relativePath.startsWith('.')) {
+            relativePath = './' + relativePath;
+        }
+
+        // Convert Windows backslashes to forward slashes
+        relativePath = relativePath.replace(/\\/g, '/');
+
+        return `from '${relativePath}'`;
     });
 
     if (content !== newContent) {
