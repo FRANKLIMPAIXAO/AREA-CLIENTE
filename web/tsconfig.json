@@ -26,6 +26,15 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@/app/*": [
+        "app/*"
+      ],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/supabase/*": [
+        "supabase/*"
       ]
     }
   },
