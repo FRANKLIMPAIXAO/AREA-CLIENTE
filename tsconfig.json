@@ -3,12 +3,17 @@
         "baseUrl": ".",
         "paths": {
             "@/*": [
-                "./web/*"
+                "web/*"
             ]
-        }
+        },
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true
     },
-    "include": [
-        "web/**/*.ts",
-        "web/**/*.tsx"
+    "include": [],
+    "references": [
+        {
+            "path": "./web"
+        }
     ]
 }
