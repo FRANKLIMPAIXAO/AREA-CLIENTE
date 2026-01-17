@@ -1,28 +1,14 @@
-import { createClient, createSafeClient } from '../../../supabase/server'
+import { createClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 export default async function AdminEmpresasPage() {
-    let companies = []
+    const supabase = await createClient()
 
-    try {
-        // Use safe client for RSC fetching to avoid cookie write errors
-        const supabase = await createSafeClient()
-
-        const { data, error } = await supabase
-            .from('companies')
-            .select('*')
-            .order('created_at', { ascending: false })
-
-        if (error) {
-            console.error('Error fetching companies:', error)
-        } else {
-            companies = data || []
-        }
-    } catch (e) {
-        console.error('Critical error in AdminEmpresasPage:', e)
-    }
+    const { data: companies } = await supabase
+        .from('companies')
+        .select('*')
+        .order('created_at', { ascending: false })
 
     async function createCompany(formData: FormData) {
         'use server'
@@ -130,7 +116,7 @@ export default async function AdminEmpresasPage() {
                         ) : (
                             <tr>
                                 <td colSpan={4} className="px-6 py-12 text-center text-gray-500">
-                                    Nenhuma empresa cadastrada (ou erro ao carregar)
+                                    Nenhuma empresa cadastrada
                                 </td>
                             </tr>
                         )}
