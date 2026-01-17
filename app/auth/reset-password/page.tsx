@@ -1,13 +1,62 @@
-import { createClient } from '../../../supabase/server'
+'use client'
+
+import { useActionState } from 'react'
+import { resetPassword } from './actions'
+import { Button } from '../../../components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../components/ui/card'
 import { LockClosedIcon } from '@heroicons/react/24/outline'
-import ResetPasswordForm from './reset-password-form'
-import Link from 'next/link'
 
-export default async function ResetPasswordPage() {
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+const initialState = {
+    error: '',
+    message: ''
+}
 
+function ResetPasswordForm() {
+    const [state, formAction, isPending] = useActionState(resetPassword, initialState)
+
+    return (
+        <form action={formAction} className="space-y-4">
+            {state?.error && (
+                <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm">
+                    {state.error}
+                </div>
+            )}
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700" htmlFor="password">
+                    Nova Senha
+                </label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    minLength={6}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    placeholder="Digite sua nova senha"
+                />
+            </div>
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700" htmlFor="confirmPassword">
+                    Confirmar Nova Senha
+                </label>
+                <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    required
+                    minLength={6}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    placeholder="Confirme sua nova senha"
+                />
+            </div>
+            <Button type="submit" className="w-full bg-primary hover:bg-orange-600 font-bold text-white" disabled={isPending}>
+                {isPending ? 'Atualizando...' : 'Atualizar Senha'}
+            </Button>
+        </form>
+    )
+}
+
+export default function ResetPasswordPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
             <Card className="w-full max-w-md shadow-lg border-0">
@@ -17,32 +66,11 @@ export default async function ResetPasswordPage() {
                     </div>
                     <CardTitle className="text-2xl font-bold text-gray-900">Definir Nova Senha</CardTitle>
                     <CardDescription>
-                        {user ? (
-                            <>
-                                Logado como: <span className="font-medium text-orange-600">{user.email}</span>
-                                <br />
-                                Digite sua nova senha abaixo.
-                            </>
-                        ) : (
-                            <span className="text-red-500 font-bold">
-                                Erro: Sessão não encontrada. O link pode ter expirado.
-                            </span>
-                        )}
+                        Digite sua nova senha abaixo para recuperar o acesso à sua conta.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {user ? (
-                        <ResetPasswordForm />
-                    ) : (
-                        <div className="text-center">
-                            <p className="text-sm text-gray-500 mb-4">
-                                Tente solicitar um novo link de recuperação.
-                            </p>
-                            <Link href="/login" className="text-primary hover:underline font-medium">
-                                Voltar para o Login
-                            </Link>
-                        </div>
-                    )}
+                    <ResetPasswordForm />
                 </CardContent>
             </Card>
         </div>
