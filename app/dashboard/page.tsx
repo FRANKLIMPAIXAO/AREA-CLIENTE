@@ -1,6 +1,8 @@
 import { createClient } from '../../supabase/server'
 import DueDatesCalendar from '../../components/DueDatesCalendar'
-import { CalendarIcon, DocumentTextIcon, BuildingOfficeIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { CalendarIcon, DocumentTextIcon, BuildingOfficeIcon, ClockIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/card'
+import { cn } from '../../lib/utils'
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -88,97 +90,175 @@ export default async function DashboardPage() {
         return acc
     }, {} as Record<string, number>)
 
+    const thisMonthDocs = recentDocuments?.filter(d =>
+        new Date(d.uploaded_at).getMonth() === new Date().getMonth()
+    ).length || 0
+
     const stats = [
-        { name: 'Empresas', value: companiesCount, icon: BuildingOfficeIcon, color: 'bg-indigo-600' },
-        { name: 'Documentos', value: totalDocuments.count || 0, icon: DocumentTextIcon, color: 'bg-purple-600' },
-        { name: 'Vencimentos', value: dueDocsWithCompany.length, icon: ClockIcon, color: 'bg-red-600' },
         {
-            name: 'Este Mês', value: recentDocuments?.filter(d =>
-                new Date(d.uploaded_at).getMonth() === new Date().getMonth()
-            ).length || 0, icon: CalendarIcon, color: 'bg-green-600'
+            name: 'Empresas Ativas',
+            value: companiesCount,
+            icon: BuildingOfficeIcon,
+            description: "Empresas vinculadas",
+            color: "text-blue-500",
+            bg: "bg-blue-50"
+        },
+        {
+            name: 'Total Documentos',
+            value: totalDocuments.count || 0,
+            icon: DocumentTextIcon,
+            description: "Arquivos processados",
+            color: "text-purple-500",
+            bg: "bg-purple-50"
+        },
+        {
+            name: 'Vencimentos',
+            value: dueDocsWithCompany.length,
+            icon: ClockIcon,
+            description: "Neste mês",
+            color: "text-rose-500",
+            bg: "bg-rose-50"
+        },
+        {
+            name: 'Recentes',
+            value: thisMonthDocs,
+            icon: CalendarIcon,
+            description: "Uploads este mês",
+            color: "text-emerald-500",
+            bg: "bg-emerald-50"
         },
     ]
 
     return (
         <div className="space-y-8">
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <p className="mt-2 text-gray-600">Bem-vindo à sua área do cliente</p>
+            <div className="flex items-center justify-between">
+                <div>
+                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                        Visão Geral
+                    </h2>
+                    <p className="text-muted-foreground mt-1">
+                        Acompanhe o status e as atividades recentes das suas empresas.
+                    </p>
+                </div>
+                <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground bg-white px-3 py-1 rounded-full shadow-sm border border-gray-100">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Sistema Online
+                </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {stats.map((stat) => (
-                    <div
-                        key={stat.name}
-                        className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
-                    >
-                        <div className="flex items-center">
-                            <div className={`flex-shrink-0 rounded-md ${stat.color} p-3`}>
-                                <stat.icon className="h-6 w-6 text-white" />
+                    <Card key={stat.name} className="overflow-hidden transition-all hover:shadow-md border-border/50">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-muted-foreground">
+                                {stat.name}
+                            </CardTitle>
+                            <div className={cn("p-2 rounded-full", stat.bg)}>
+                                <stat.icon className={cn("h-4 w-4", stat.color)} />
                             </div>
-                            <div className="ml-5 w-0 flex-1">
-                                <dt className="truncate text-sm font-medium text-gray-500">{stat.name}</dt>
-                                <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-                                    {stat.value}
-                                </dd>
-                            </div>
-                        </div>
-                    </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{stat.value}</div>
+                            <p className="text-xs text-muted-foreground mt-1">
+                                {stat.description}
+                            </p>
+                        </CardContent>
+                    </Card>
                 ))}
             </div>
 
-            {/* Calendar and Documents Row */}
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {/* Calendar */}
-                <DueDatesCalendar documents={dueDocsWithCompany} />
+            {/* Content Grid */}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                {/* Calendar Section */}
+                <Card className="col-span-4 border-border/50">
+                    <CardHeader>
+                        <CardTitle>Calendário de Obrigações</CardTitle>
+                        <CardDescription>Visualize os vencimentos previstos para este mês</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <DueDatesCalendar documents={dueDocsWithCompany} />
+                    </CardContent>
+                </Card>
 
                 {/* Department Stats */}
-                <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">Documentos por Departamento</h2>
-                    <div className="space-y-3">
-                        {departmentCounts && Object.entries(departmentCounts).map(([dept, count]) => (
-                            <div key={dept} className="flex items-center justify-between">
-                                <span className="text-sm text-gray-600">{dept}</span>
-                                <span className="text-sm font-semibold text-gray-900">{count}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <Card className="col-span-3 border-border/50">
+                    <CardHeader>
+                        <CardTitle>Documentos por Departamento</CardTitle>
+                        <CardDescription>Distribuição dos arquivos processados</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {departmentCounts && Object.entries(departmentCounts).map(([dept, count], index) => (
+                                <div key={dept} className="flex items-center">
+                                    <div className="flex-1 space-y-1">
+                                        <p className="text-sm font-medium leading-none">{dept}</p>
+                                        <div className="h-2 w-full max-w-[200px] rounded-full bg-secondary overflow-hidden">
+                                            <div
+                                                className="h-full bg-primary transition-all duration-500"
+                                                style={{ width: `${(count / (totalDocuments.count || 1)) * 100}%` }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="font-bold text-muted-foreground">{count}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
 
             {/* Recent Documents */}
-            <div className="rounded-lg bg-white shadow">
-                <div className="px-6 py-5 border-b border-gray-200">
-                    <h2 className="text-lg font-semibold text-gray-900">Documentos Recentes</h2>
-                </div>
-                <div className="divide-y divide-gray-200">
-                    {recentDocuments && recentDocuments.length > 0 ? (
-                        recentDocuments.map((doc) => (
-                            <div key={doc.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2">
-                                        {(doc.department as any)?.icon && (
-                                            <span>{(doc.department as any).icon}</span>
-                                        )}
-                                        <p className="text-sm font-medium text-gray-900">{doc.name}</p>
+            <Card className="border-border/50">
+                <CardHeader>
+                    <CardTitle>Últimos Documentos</CardTitle>
+                    <CardDescription>
+                        Arquivos enviados recentemente para sua conta
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {recentDocuments && recentDocuments.length > 0 ? (
+                            recentDocuments.map((doc) => (
+                                <div
+                                    key={doc.id}
+                                    className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors group"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border bg-background group-hover:bg-background/80 transition-colors">
+                                            {(doc.department as any)?.icon ? (
+                                                <span className="text-xl">{(doc.department as any).icon}</span>
+                                            ) : (
+                                                <DocumentTextIcon className="h-5 w-5 text-muted-foreground" />
+                                            )}
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-medium leading-none line-clamp-1">
+                                                {doc.name}
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                {(doc.company as any)?.name} • {doc.type}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-gray-500">
-                                        {(doc.company as any)?.name} • {doc.type} • {doc.competence || 'N/A'}
-                                    </p>
+                                    <div className="text-right">
+                                        <p className="text-sm text-muted-foreground">
+                                            {new Date(doc.uploaded_at).toLocaleDateString('pt-BR')}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground uppercase">
+                                            {doc.competence || 'N/A'}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="text-sm text-gray-400">
-                                    {new Date(doc.uploaded_at).toLocaleDateString('pt-BR')}
-                                </div>
+                            ))
+                        ) : (
+                            <div className="text-center py-8 text-muted-foreground">
+                                Nenhum documento recente encontrado
                             </div>
-                        ))
-                    ) : (
-                        <div className="px-6 py-8 text-center text-gray-500">
-                            Nenhum documento encontrado
-                        </div>
-                    )}
-                </div>
-            </div>
+                        )}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     )
 }
