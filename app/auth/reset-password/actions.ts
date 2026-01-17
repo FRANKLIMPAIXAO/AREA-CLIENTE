@@ -30,5 +30,5 @@ export async function resetPassword(prevState: any, formData: FormData) {
         return { error: error.message }
     }
 
-    redirect('/dashboard?message=Senha atualizada com sucesso')
+    redirect(`/dashboard?message=${encodeURIComponent('Senha atualizada com sucesso')}`)
 }

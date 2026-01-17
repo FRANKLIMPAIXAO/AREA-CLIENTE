@@ -46,7 +46,7 @@ export async function signup(formData: FormData) {
         return redirect(`/login?message=${encodeURIComponent(error.message)}`)
     }
 
-    return redirect('/login?message=Check email to continue sign in process')
+    return redirect(`/login?message=${encodeURIComponent('Check email to continue sign in process')}`)
 }
 
 export async function signOut() {
@@ -68,5 +68,5 @@ export async function forgotPassword(formData: FormData) {
         return redirect(`/login?message=${encodeURIComponent(error.message)}`)
     }
 
-    return redirect('/login?message=Email de recuperação enviado. Verifique sua caixa de entrada.')
+    return redirect(`/login?message=${encodeURIComponent('Email de recuperação enviado. Verifique sua caixa de entrada.')}`)
 }

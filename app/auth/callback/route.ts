@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
         if (error) {
             console.error('Auth Code Exchange Error:', error)
-            return NextResponse.redirect(`${origin}/login?message=Erro ao validar link de recuperação: ${error.message}`)
+            return NextResponse.redirect(`${origin}/login?message=${encodeURIComponent(`Erro ao validar link de recuperação: ${error.message}`)}`)
         }
         console.log('Auth Code Exchange Success')
     }
