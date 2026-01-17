@@ -1,11 +1,15 @@
 import { createClient } from '../../../supabase/server'
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
     const requestUrl = new URL(request.url)
     const code = requestUrl.searchParams.get('code')
     const origin = requestUrl.origin
     const next = requestUrl.searchParams.get('next') || '/'
+
+    console.log(`Auth Callback hit. Code: ${code ? 'Yes' : 'No'}, Next: ${next}`)
 
     if (code) {
         const supabase = await createClient()
@@ -15,6 +19,7 @@ export async function GET(request: Request) {
             console.error('Auth Code Exchange Error:', error)
             return NextResponse.redirect(`${origin}/login?message=Erro ao validar link de recuperação: ${error.message}`)
         }
+        console.log('Auth Code Exchange Success')
     }
 
     // URL to redirect to after sign in process completes
