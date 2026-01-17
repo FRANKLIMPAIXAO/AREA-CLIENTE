@@ -54,3 +54,19 @@ export async function signOut() {
     await supabase.auth.signOut()
     return redirect('/login')
 }
+
+export async function forgotPassword(formData: FormData) {
+    const supabase = await createClient()
+    const email = formData.get('email') as string
+    const origin = process.env.NEXT_PUBLIC_APP_URL || 'https://area-cliente-hazel.vercel.app'
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${origin}/auth/callback?next=/auth/reset-password`,
+    })
+
+    if (error) {
+        return redirect(`/login?message=${encodeURIComponent(error.message)}`)
+    }
+
+    return redirect('/login?message=Email de recuperação enviado. Verifique sua caixa de entrada.')
+}

@@ -35,15 +35,6 @@ export default function LoginPage() {
             {/* Right: Login Form */}
             <div className="lg:p-8 flex items-center justify-center bg-white">
                 <div className="mx-auto flex w-full flex-col justify-center space-y-8 sm:w-[400px]">
-                    <div className="flex flex-col space-y-2 text-center">
-                        <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                            Bem-vindo de volta
-                        </h1>
-                        <p className="text-sm text-gray-500">
-                            Acesse sua conta para gerenciar seus documentos
-                        </p>
-                    </div>
-
                     <Suspense fallback={<div className="text-center text-sm text-muted-foreground">Carregando...</div>}>
                         <LoginForm />
                     </Suspense>
