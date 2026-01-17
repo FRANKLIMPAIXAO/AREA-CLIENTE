@@ -3,6 +3,8 @@
 import { login, signup } from './actions'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import { Button } from '../../components/ui/button'
+import { cn } from '../../lib/utils'
 
 export default function LoginForm() {
     const searchParams = useSearchParams()
@@ -14,15 +16,10 @@ export default function LoginForm() {
     }
 
     return (
-        <div className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20">
-            <div className="text-center">
-                <h2 className="text-3xl font-bold text-white tracking-tight">Bem-vindo</h2>
-                <p className="mt-2 text-sm text-gray-300">Acesse sua conta ou crie uma nova</p>
-            </div>
-
-            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                    <div>
+        <div className="grid gap-6">
+            <form onSubmit={handleSubmit}>
+                <div className="grid gap-4">
+                    <div className="grid gap-2">
                         <label htmlFor="email" className="sr-only">
                             Email
                         </label>
@@ -32,11 +29,11 @@ export default function LoginForm() {
                             type="email"
                             autoComplete="email"
                             required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white placeholder-gray-400 transition-all outline-none"
-                            placeholder="Email"
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            placeholder="nome@exemplo.com"
                         />
                     </div>
-                    <div>
+                    <div className="grid gap-2">
                         <label htmlFor="password" className="sr-only">
                             Senha
                         </label>
@@ -46,49 +43,48 @@ export default function LoginForm() {
                             type="password"
                             autoComplete="current-password"
                             required
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white placeholder-gray-400 transition-all outline-none"
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             placeholder="Senha"
                         />
                     </div>
 
-                    {/* Optional: Full Name for Signup */}
-                    <div>
-                        <label htmlFor="fullName" className="sr-only">
-                            Nome Completo (apenas para cadastro)
-                        </label>
-                        <input
-                            id="fullName"
-                            name="fullName"
-                            type="text"
-                            autoComplete="name"
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white placeholder-gray-400 transition-all outline-none"
-                            placeholder="Nome Completo (para cadastro)"
-                        />
-                    </div>
-                </div>
+                    {message && (
+                        <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded-md">
+                            {message}
+                        </div>
+                    )}
 
-                {message && (
-                    <div className="p-3 text-sm text-red-200 bg-red-500/20 border border-red-500/50 rounded-lg">
-                        {message}
-                    </div>
-                )}
-
-                <div className="flex flex-col gap-4">
-                    <button
+                    <Button
                         formAction={login}
                         disabled={isLoading}
-                        className="w-full px-4 py-3 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full"
                     >
-                        {isLoading ? 'Processando...' : 'Entrar'}
-                    </button>
-                    <button
-                        formAction={signup}
-                        disabled={isLoading}
-                        className="w-full px-4 py-3 text-sm font-medium text-indigo-200 bg-white/5 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        Criar Conta
-                    </button>
+                        {isLoading ? 'Entrando...' : 'Entrar com Email'}
+                    </Button>
                 </div>
+            </form>
+
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-muted" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                        Ou continue com
+                    </span>
+                </div>
+            </div>
+
+            <form>
+                <Button
+                    formAction={signup}
+                    variant="outline"
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full"
+                >
+                    Criar nova conta
+                </Button>
             </form>
         </div>
     )
