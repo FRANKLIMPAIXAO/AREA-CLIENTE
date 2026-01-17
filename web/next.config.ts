@@ -9,13 +9,20 @@ const nextConfig: NextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-    // Ensure path aliases work correctly in Turbopack
+    // Explicitly configure aliases for both Webpack and Turbopack
     webpack: (config) => {
         config.resolve.alias = {
             ...config.resolve.alias,
             "@": path.resolve(__dirname, "./"),
         };
         return config;
+    },
+    experimental: {
+        turbo: {
+            resolveAlias: {
+                "@/": "./",
+            },
+        },
     },
 };
 
