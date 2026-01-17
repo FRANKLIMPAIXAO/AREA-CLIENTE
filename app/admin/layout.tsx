@@ -7,31 +7,31 @@ export default async function AdminLayout({
     children: React.ReactNode
 }) {
     try {
-        // const supabase = await createSafeClient()
+        const supabase = await createSafeClient()
 
-        // const { data: { user }, error: authError } = await supabase.auth.getUser()
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-        // if (authError || !user) {
-        //     console.error('Admin Layout: Auth error or no user', authError)
-        //     // redirect('/login')
-        // }
+        if (authError || !user) {
+            console.error('Admin Layout: Auth error or no user', authError)
+            redirect('/login')
+        }
 
-        // // Check if user is admin
-        // const { data: profile, error: profileError } = await supabase
-        //     .from('profiles')
-        //     .select('is_admin')
-        //     // .eq('id', user.id)
-        //     .single()
+        // Check if user is admin
+        const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', user.id)
+            .single()
 
-        // if (profileError) {
-        //      console.error('Admin Layout: Profile fetch error', profileError)
-        //      // Fallback or redirect if profile fetch fails
-        //      // redirect('/dashboard?message=Erro ao verificar permissões de administrador')
-        // }
+        if (profileError) {
+            console.error('Admin Layout: Profile fetch error', profileError)
+            // Fallback or redirect if profile fetch fails
+            redirect('/dashboard?message=Erro ao verificar permissões de administrador')
+        }
 
-        // if (!profile?.is_admin) {
-        //     // redirect('/dashboard')
-        // }
+        if (!profile?.is_admin) {
+            redirect('/dashboard')
+        }
 
         return (
             <div className="min-h-screen bg-gray-50">
