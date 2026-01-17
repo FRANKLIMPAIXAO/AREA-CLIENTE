@@ -63,7 +63,11 @@ export default async function AdminLayout({
                 </main>
             </div>
         )
-    } catch (e) {
+    } catch (e: any) {
+        // If the error is a Next.js redirect, re-throw it so Next.js handles it
+        if (e?.message === 'NEXT_REDIRECT' || e?.digest === 'NEXT_REDIRECT') {
+            throw e
+        }
         console.error('Unexpected error in AdminLayout:', e)
         redirect('/dashboard?message=Erro inesperado ao acessar painel administrativo')
     }
