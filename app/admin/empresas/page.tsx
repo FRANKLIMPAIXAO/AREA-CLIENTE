@@ -1,4 +1,4 @@
-import { createClient } from '../../../supabase/server'
+import { createClient, createSafeClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
@@ -7,7 +7,8 @@ export default async function AdminEmpresasPage() {
     let companies = []
 
     try {
-        const supabase = await createClient()
+        // Use safe client for RSC fetching to avoid cookie write errors
+        const supabase = await createSafeClient()
 
         const { data, error } = await supabase
             .from('companies')
