@@ -1,6 +1,7 @@
 import { createClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
+import { DeleteButton } from './delete-button'
 
 export default async function AdminEmpresasPage() {
     const supabase = await createClient()
@@ -96,20 +97,7 @@ export default async function AdminEmpresasPage() {
                                         {new Date(company.created_at).toLocaleDateString('pt-BR')}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <form action={deleteCompany} className="inline">
-                                            <input type="hidden" name="id" value={company.id} />
-                                            <button
-                                                type="submit"
-                                                className="text-red-600 hover:text-red-900 ml-4"
-                                                onClick={(e) => {
-                                                    if (!confirm('Tem certeza? Isso removerá todos os vínculos e documentos!')) {
-                                                        e.preventDefault()
-                                                    }
-                                                }}
-                                            >
-                                                <TrashIcon className="h-4 w-4 inline" />
-                                            </button>
-                                        </form>
+                                        <DeleteButton formAction={deleteCompany} companyId={company.id} />
                                     </td>
                                 </tr>
                             ))
