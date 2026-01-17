@@ -8,9 +8,13 @@ import { cn } from '../../lib/utils'
 
 export default function LoginForm() {
     const searchParams = useSearchParams()
-    const message = searchParams.get('message')
+    const message = searchParams?.get('message') // Optional chaining for safety
     const [isLoading, setIsLoading] = useState(false)
     const [isRecovery, setIsRecovery] = useState(false)
+
+    // Ensure message is a string before checking includes
+    const isSuccessMessage = message && typeof message === 'string' && message.includes('enviado')
+    const isErrorMessage = message && typeof message === 'string' && !isSuccessMessage
 
     const handleSubmit = () => {
         setIsLoading(true)
@@ -65,7 +69,7 @@ export default function LoginForm() {
                 {message && (
                     <div className={cn(
                         "p-3 text-sm rounded-md border",
-                        message.includes('enviado') ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-500 border-red-200"
+                        isSuccessMessage ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-500 border-red-200"
                     )}>
                         {message}
                     </div>
