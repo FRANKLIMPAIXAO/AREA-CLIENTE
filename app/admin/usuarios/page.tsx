@@ -2,6 +2,8 @@ import { createClient } from '../../../supabase/server'
 import { revalidatePath } from 'next/cache'
 import { UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+import { ImportClientsButton } from './import-button'
+
 export default async function AdminUsuariosPage() {
     const supabase = await createClient()
 
@@ -58,9 +60,12 @@ export default async function AdminUsuariosPage() {
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-2xl font-bold text-gray-900">Gerenciar Usuários</h1>
-                <p className="mt-1 text-sm text-gray-500">Vincular usuários a empresas</p>
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Gerenciar Usuários</h1>
+                    <p className="mt-1 text-sm text-gray-500">Vincular usuários a empresas</p>
+                </div>
+                <ImportClientsButton />
             </div>
 
             {/* Link User Form */}
