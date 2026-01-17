@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./web/*"
+            ]
+        }
+    },
+    "include": [
+        "web/**/*.ts",
+        "web/**/*.tsx"
+    ]
+}
