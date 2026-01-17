@@ -18,25 +18,16 @@
     "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/app/*": [
-        "app/*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/supabase/*": [
-        "supabase/*"
-      ]
-    }
+    ]
   },
   "include": [
     "next-env.d.ts",
