@@ -16,6 +16,12 @@ export async function resetPassword(prevState: any, formData: FormData) {
         return { error: 'A senha deve ter pelo menos 6 caracteres' }
     }
 
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+        return { error: 'Sessão expirada ou inválida. Por favor, solicite a redefinição de senha novamente.' }
+    }
+
     const { error } = await supabase.auth.updateUser({
         password: password
     })
