@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { BuildingOfficeIcon, DocumentTextIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { BuildingOfficeIcon, DocumentTextIcon, ShieldCheckIcon, ChartBarIcon } from '@heroicons/react/24/outline'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -18,75 +18,97 @@ export default async function Home() {
 
   const features = [
     {
-      title: 'Gestão Centralizada',
-      description: 'Todas as suas empresas e documentos em um único lugar, facilitando o acesso e organização.',
-      icon: BuildingOfficeIcon,
+      title: 'Recuperação Tributária',
+      description: 'Análise completa para identificar oportunidades de recuperação de impostos pagos indevidamente.',
+      icon: ChartBarIcon,
     },
     {
-      title: 'Documentos Seguros',
-      description: 'Acesse guias, contratos e folhas de pagamento com total segurança e criptografia.',
+      title: 'Gestão de Documentos',
+      description: 'Acesse guias, contratos e relatórios contábeis com segurança e agilidade.',
       icon: DocumentTextIcon,
     },
     {
-      title: 'Conformidade',
-      description: 'Mantenha-se em dia com suas obrigações fiscais e trabalhistas com nossos alertas inteligentes.',
+      title: 'Conformidade Fiscal',
+      description: 'Mantenha sua empresa em dia com a legislação vigente e evite multas.',
       icon: ShieldCheckIcon,
     },
   ]
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-stone-50">
       {/* Navbar */}
-      <header className="flex h-16 items-center justify-between border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="flex h-16 items-center justify-between border-b bg-white px-6 shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-            <BuildingOfficeIcon className="h-5 w-5 text-primary" />
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
+            P
           </div>
-          <span className="text-lg font-bold">Área do Cliente</span>
+          <span className="text-xl font-bold text-gray-800 tracking-tight">PAC <span className="text-primary">Tributária</span></span>
         </div>
-        <Link href="/login">
-          <Button>Acessar Conta</Button>
-        </Link>
+        <div className="flex gap-4">
+          <Link href="/login">
+            <Button variant="outline" className="border-primary text-primary hover:bg-orange-50 font-semibold">
+              Área do Cliente
+            </Button>
+          </Link>
+          <Link href="https://wa.me/550000000000" target="_blank">
+            <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white font-bold shadow-md">
+              Falar no WhatsApp
+            </Button>
+          </Link>
+        </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-24 md:py-32 bg-gradient-to-br from-primary/5 via-background to-background">
+        <section className="relative overflow-hidden py-24 md:py-32 bg-gradient-to-br from-orange-50 via-white to-white">
           <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center space-y-8">
-            <div className="space-y-4 max-w-3xl">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tighter sm:text-5xl">
-                Simplifique a gestão contábil da sua empresa
+            <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-sm font-medium text-orange-800 mb-4">
+              <span className="flex h-2 w-2 rounded-full bg-orange-600 mr-2"></span>
+              Soluções Inteligentes para sua Empresa
+            </div>
+            <div className="space-y-4 max-w-4xl">
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+                Inteligência Tributária que <span className="bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">Gera Resultados</span>
               </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Plataforma completa para acessar documentos, guias de impostos e manter a contabilidade do seu negócio em dia.
+              <p className="mx-auto max-w-[800px] text-gray-600 md:text-xl leading-relaxed">
+                Somos especialistas em transformar a gestão tributária do seu negócio. Acesse nossa área do cliente para gerenciar documentos e acompanhar processos.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link href="/login">
-                <Button size="lg" className="h-12 px-8 text-lg">
-                  Entrar na Plataforma
+                <Button size="lg" className="h-14 px-8 text-lg font-bold shadow-orange-200 shadow-xl bg-gradient-to-r from-primary to-orange-600 hover:from-orange-600 hover:to-orange-700 border-0">
+                  Acessar Área do Cliente
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="h-12 px-8 text-lg">
-                Saiba Mais
-              </Button>
             </div>
           </div>
+
+          {/* Abstract Shapes */}
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-orange-200/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 translate-y-1/3 translate-x-1/3 w-[600px] h-[600px] bg-green-200/20 rounded-full blur-3xl pointer-events-none" />
         </section>
 
         {/* Features Section */}
         <section className="container mx-auto px-4 md:px-6 py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Porque escolher a PAC Tributária?
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Tecnologia e expertise unidas para o crescimento do seu negócio.
+            </p>
+          </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <Card key={feature.title} className="border-border/50 hover:shadow-lg transition-all">
+              <Card key={feature.title} className="border-0 shadow-lg bg-white hover:shadow-xl transition-all duration-300 group">
                 <CardHeader>
-                  <div className="mb-4 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="h-6 w-6 text-primary" />
+                  <div className="mb-4 h-14 w-14 rounded-2xl bg-orange-50 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                    <feature.icon className="h-7 w-7 text-primary group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl font-bold text-gray-900">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-500 leading-relaxed">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -97,19 +119,15 @@ export default async function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t py-12 bg-muted/20">
+      <footer className="border-t border-gray-200 py-12 bg-white">
         <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center gap-6">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Área do Cliente. Todos os direitos reservados.
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded bg-primary flex items-center justify-center text-white text-xs font-bold">P</div>
+            <span className="font-bold text-gray-700">PAC Tributária</span>
+          </div>
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} PAC Tributária. Todos os direitos reservados.
           </p>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link className="text-sm hover:underline underline-offset-4" href="#">
-              Termos de Uso
-            </Link>
-            <Link className="text-sm hover:underline underline-offset-4" href="#">
-              Privacidade
-            </Link>
-          </nav>
         </div>
       </footer>
     </div>
